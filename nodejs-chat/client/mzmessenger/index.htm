@@ -1,0 +1,231 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+	<meta charset="UTF-8">
+	<meta name="description" content="bjDeliverer - a message deliverer runs as middle-layer with NodeJS. See Myzone Messenger demo.">
+	<meta name="keywords" content="bjDeliverer, chat nodejs, bjlab.us, bjlab, bellaJS, bellaPHP, Dong Nguyen, ndaidong">
+	<meta name="author" content="Dong Nguyen">
+	<meta name="contact" content="ndaidong at Gmail">
+	
+	<!-- OpenGraph metadata -->
+	<meta property="og:site_name" content="bjDeliverer">
+	<meta property="og:title" content="Myzone Messenger with bjDeliverer">
+	<meta property="og:url" content="http://demo.bjlab.us/mzm/">
+	<meta property="og:creator" content="Dong Nguyen">
+	<meta property="og:type" content="webapp">
+	<meta property="og:image" content="http://bjlab.us/assets/css/images/logo/bj.png">
+	<meta property="og:description" content="bjDeliverer - a message deliverer runs as middle-layer with NodeJS. See with Myzone Messenger demo.">	
+	
+	<!-- Twitter card -->
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:site" content="@ndaidong">
+	<meta name="twitter:creator" content="@ndaidong">
+	<meta name="twitter:url" content="http://demo.bjlab.us/mzm/">
+	<meta name="twitter:title" content="Myzone Messenger with bjDeliverer">
+	<meta name="twitter:description" content="bjDeliverer - a message deliverer runs as middle-layer with NodeJS. See demo with Myzone Messenger.">
+	<meta name="twitter:image" content="http://bjlab.us/assets/css/images/logo/bj.png">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	
+	<title>Myzone Messenger with bjDeliverer</title>
+			
+	<link rel="icon" href="/favicon.ico" sizes="24x24">
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+	<link rel="stylesheet" type="text/css" href="assets/css/default.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/chat.css">
+	<script type="text/javascript" src="assets/js/libs/bellaJS.min.js"></script>
+	<script type="text/javascript" src="http://bjlab.us/node/socket.io/socket.io.js"></script>
+  </head>
+  <body> 
+	<div class="container">
+		<div class ="row">
+			<div class="cell div-2-3">
+				<div class="inner">
+					<h3 class="title">Myzone Messenger v.0.1.3 demo</h3>	
+				</div>		
+			</div>
+			<div class="cell div-1-3">
+				<div class="inner">
+					...
+				</div>		
+			</div>
+		</div>
+		<div class ="row">
+			<div class="cell div-1-3 user-list">
+				<div class="inner">
+					<h4>All demo users</h4>
+					<div id="userList"></div>	
+				</div>		
+			</div>
+			<div class="cell div-1-3 my-info">
+				<div class="inner">
+					<h4>View as</h4>
+					<div id="myInfo">
+						<div class="intro">
+							Please click on one of people from left-side list to choose your role.<br><br><br>
+							<center><img src="http://i.imgur.com/SxVmuko.jpg"></center><br><br>
+							These demo users have been retrieved from my Twitter.<br><br>
+							Sorry if you are in this list without consultation. Please feel free to let me know if you don't like to see your name and avatar appear here.
+						</div>
+					</div>		
+				</div>	
+			</div>			
+			<div class="cell div-1-3 friend-list">
+				<div class="inner">
+					<h4>Friend list</h4>
+					<div id="friendList">
+						<div class="intro">
+							After you have a role, the friends of the people who you are will be listed here so that you can start chatting with them.<br><br>
+							<center><img src="http://i.imgur.com/cYYILbs.jpg"></center>
+							The relationships between these demo users were also made automatically by scripting and may not reflect the real world.
+						</div>					
+					</div>			
+				</div>
+			</div>
+		</div>
+		<div class ="row">
+			<div class="cell div-1-1 centering">
+				<div class="inner">
+					<div class="copyright">
+						 &copy;2013 <a href="http://greenglobal.vn">GreenGlobal.vn</a> 
+						- Author by <a href="https://twitter.com/ndaidong">@ndaidong</a>
+						- <a href="https://github.com/dongnd/bjDeliverer">Source code and Documentation</a>
+					 </div>
+				</div>		
+			</div>
+		</div>
+	</div>
+	
+	<div id="messbox"></div>
+	<div id="dialog"></div>
+	<div id="overlay"></div>
+	<script type="text/javascript">
+		var USER_LIST = [
+			{
+				userid : '2797460771',
+				username : 'ndaidong',
+				displayName : 'Dong Nguyen',
+				avatar : 'https://si0.twimg.com/profile_images/2797460771/2bcec2c42cc42fa83dce597b61a51b65_bigger.jpeg',
+			},
+			{
+				userid : '3221742532',
+				username : 'obama',
+				displayName : 'Barack Obama',
+				avatar : 'https://si0.twimg.com/profile_images/3221742532/5ceae8f2b72a1a8b012d2f5960fb46be_bigger.jpeg',
+			},
+			{
+				userid : '3571553193',
+				username : 'billclinton',
+				displayName : 'Bill Clinton',
+				avatar : 'https://si0.twimg.com/profile_images/3571553193/413f598acf9d4b264cd657ddafd1d40c_bigger.jpeg',
+			},
+			{
+				userid : '1531127304',
+				username : 'fhollande',
+				displayName : 'François Hollande',
+				avatar : 'https://si0.twimg.com/profile_images/1531127304/Capture_d_e_cran_2011-09-06_a__11.21.54_bigger.png',
+			},
+			{
+				userid : '378800000478121915',
+				username : 'gnapolitano',
+				displayName : 'Giorgio Napolitano',
+				avatar : 'https://si0.twimg.com/profile_images/378800000478121915/945afc7c96b2984b043090f184a06863_bigger.jpeg',
+			},
+			{
+				userid : '367270085',
+				username : 'msiegs',
+				displayName : 'Marcus Siegel',
+				avatar : 'https://si0.twimg.com/profile_images/367270085/heaphone_monkey_normal.jpg',
+			},
+			{
+				userid : '3679534581',
+				username : 'bangvndng',
+				displayName : 'Vu Ngoc Bang',
+				avatar : 'https://si0.twimg.com/profile_images/3679534581/c6936dddcfb91c660e490a60602bf779_normal.jpeg',
+			},
+			{
+				userid : '2604582360',
+				username : 'Diianamoetz',
+				displayName : 'Diana Moetz',
+				avatar : 'https://si0.twimg.com/profile_images/2604582360/72sw4da6p14jaz7q3i9r_normal.jpeg',
+			},
+			{
+				userid : '1411652327',
+				username : 'TheSassySuit',
+				displayName : 'Reese Alexander',
+				avatar : 'https://si0.twimg.com/profile_images/1411652327/BLOGS_TSS_LGR_PUR_NEW_PIC_6.1.11_normal.jpg',
+			},
+			{
+				userid : '378800000152267015',
+				username : 'TheMarketaire',
+				displayName : 'Brett Prince',
+				avatar : 'https://si0.twimg.com/profile_images/378800000152267015/d49a9f662faf511e28c2252e7b1c1b38_normal.png',
+			},
+			{
+				userid : '1479450445',
+				username : 'Jonmvr',
+				displayName : 'Jon Weedman',
+				avatar : 'https://si0.twimg.com/profile_images/1479450445/MNS-0665_normal.jpg',
+			},
+			{
+				userid : '2408961698',
+				username : 'dylanbridgman',
+				displayName : 'Dylan Bridgman',
+				avatar : 'https://si0.twimg.com/profile_images/2408961698/429jr92afa567kaksmss_normal.jpeg',
+			},
+			{
+				userid : '1386787330',
+				username : 'bhosleabhimanyu',
+				displayName : 'Abhimanyu Bhosale',
+				avatar : 'https://si0.twimg.com/profile_images/1386787330/halftone1_normal.jpg',
+			}
+		];
+		
+		var CONNECTIONS = [
+			{from: '2797460771', to: '3679534581'},
+			{from: '2797460771', to: '367270085'},
+			{from: '367270085', to: '3679534581'},
+			{from: '1386787330', to: '3679534581'},
+			{from: '2408961698', to: '367270085'},
+			{from: '2797460771', to: '3221742532'},
+			{from: '2797460771', to: '3571553193'},
+			{from: '2797460771', to: '1531127304'},
+			{from: '3679534581', to: '378800000478121915'},
+			{from: '3679534581', to: '3571553193'},
+			{from: '367270085', to: '378800000478121915'},
+			{from: '367270085', to: '1531127304'},
+			{from: '3221742532', to: '1531127304'},
+			{from: '3571553193', to: '1531127304'},
+			{from: '1411652327', to: '1531127304'},
+			{from: '3571553193', to: '1411652327'},
+			{from: '1411652327', to: '378800000478121915'},
+			{from: '3679534581', to: '1411652327'},
+			{from: '1386787330', to: '378800000152267015'},
+			{from: '3679534581', to: '378800000152267015'},
+			{from: '2604582360', to: '378800000152267015'},
+			{from: '1411652327', to: '378800000152267015'},
+			{from: '1479450445', to: '1411652327'},
+			{from: '3679534581', to: '1479450445'},
+			{from: '1479450445', to: '378800000152267015'},
+			{from: '2604582360', to: '1479450445'},
+			{from: '2604582360', to: '2408961698'},
+			{from: '1411652327', to: '2408961698'},
+			{from: '3221742532', to: '3571553193'},
+			{from: '3221742532', to: '378800000478121915'},
+			{from: '3221742532', to: '367270085'},
+			{from: '2797460771', to: '1386787330'},
+			{from: '367270085', to: '1386787330'},
+		];
+	</script>
+	
+	<script type="text/javascript" src="assets/js/ext/bjd.js"></script>
+	<script type="text/javascript" src="assets/js/libs/bj.chatbox.js"></script>
+	<script type="text/javascript" src="assets/js/libs/bj.emoticon.js"></script>
+	
+	<script type="text/javascript" src="assets/js/templates/app.chat.tpl.js"></script>
+	<script type="text/javascript" src="assets/js/models/app.chat.model.js"></script>
+	<script type="text/javascript" src="assets/js/views/app.chat.view.js"></script>
+	
+	<script type="text/javascript" src="assets/js/app.init.js"></script>
+  </body>
+</html>

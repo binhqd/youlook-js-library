@@ -1,0 +1,10 @@
+{
+    "name": "bjDeliverer",
+    "version": "0.0.1",
+    "description": "Message Deliverer service application",
+    "dependencies": {
+        "socket.io": "latest",
+        "express": "latest"
+    },
+    "author": "ndaidong"
+}

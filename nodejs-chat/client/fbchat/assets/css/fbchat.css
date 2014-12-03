@@ -1,0 +1,20 @@
+
+#btnLogin{position:absolute;top:100px;left:0px;width:100%;text-align:center;height:200px;}
+
+#room{position:relative;width:800px;height:500px;background:transparent url(images/bg/noel.jpg) no-repeat center center;background-size:cover;}
+
+.inviteBox{
+	position:absolute;z-index:2;background-color:#fff;
+	-webkit-transition: all 400ms ease-in;
+	-moz-transition: all 400ms ease-in;
+	transition: all 400ms ease-in;
+	background: -moz-linear-gradient(#fff, #aaa);
+	background: -webkit-linear-gradient(#fff, #aaa);
+	background: -o-linear-gradient(#fff, #aaa);
+	-moz-box-shadow: 4px 4px 9px #000;
+	-webkit-box-shadow: 4px 4px 9px #000;
+	box-shadow: 4px 4px 9px #000;
+}
+.inviteBox .head{background-color:#66a;font:500 18px arial;color:#fff;padding:3px 0px;text-indent:5px;}
+.inviteBox .body{font:500 14px arial;color:#333;padding:10px;height:28px;text-align:center;}
+.inviteBox .foot{text-align:center;}

@@ -1,0 +1,134 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+	<meta charset="UTF-8">
+	<meta name="description" content="Hi, I'm on Facebook Lovely chat. Please come here to chat with me now! - bjDeliverer">
+	<meta name="keywords" content="bjDeliverer, chat nodejs, bjlab.us, bjlab, bellaJS, bellaPHP, Dong Nguyen, ndaidong">
+	<meta name="author" content="Dong Nguyen">
+	<meta name="contact" content="ndaidong at Gmail">
+	
+	<!-- OpenGraph metadata -->
+	<meta property="og:site_name" content="bjDeliverer">
+	<meta property="og:title" content="Facebook Lovely Chat with bjDeliverer">
+	<meta property="og:url" content="http://demo.bjlab.us/fbchat/">
+	<meta property="og:creator" content="Dong Nguyen">
+	<meta property="og:type" content="news">
+	<meta property="og:image" content="http://bjlab.us/assets/css/images/logo/bj.png">
+	<meta property="og:description" content="Hi, I'm on Facebook Lovely chat. Please come here to chat with me now! - bjDeliverer">	
+	
+	<!-- Twitter card -->
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:site" content="@ndaidong">
+	<meta name="twitter:creator" content="@ndaidong">
+	<meta name="twitter:url" content="http://demo.bjlab.us/fbchat/">
+	<meta name="twitter:title" content="Facebook Chat with bjDeliverer">
+	<meta name="twitter:description" content="Hi, I'm on Facebook Lovely chat. Please come here to chat with me now! - bjDeliverer">
+	<meta name="twitter:image" content="http://bjlab.us/assets/css/images/logo/bj.png">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	
+	<title>Facebook Lovely Chat - bjDeliverer</title>
+			
+	<link rel="icon" href="/favicon.ico" sizes="24x24">
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+	<link rel="stylesheet" type="text/css" href="assets/css/default.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/chat.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/fbchat.css">
+	<script type="text/javascript" src="assets/js/libs/bellaJS.min.js"></script>
+  </head>
+  <body> 
+	<div class="container">
+		<div class ="row">
+			<div class="cell div-1-1">
+				<div class="inner">
+					<h3 class="title">Facebook Lovely Chat</h3>	
+				</div>		
+			</div>
+		</div>
+		<div class ="row">
+			<div class="cell div-1-1">
+				<div class="inner">
+					<div id="room">
+						<div id="btnLogin"><fb:login-button size="xlarge" width="300" max-rows="1"> Sign-in via Facebook</fb:login-button></div>
+					</div>
+				</div>	
+			</div>			
+		</div>
+		<div class ="row">
+			<div class="cell div-1-1 centering">
+				<div class="inner">
+					<div class="copyright">
+						 &copy;2013 <a href="http://greenglobal.vn">GreenGlobal.vn</a> 
+						- Author by <a href="https://twitter.com/ndaidong">@ndaidong</a>
+						- <a href="https://github.com/dongnd/bjDeliverer">Source code and Documentation</a>
+					 </div>
+				</div>		
+			</div>
+		</div>
+	</div>
+	
+	<div id="messbox"></div>
+	<div id="dialog"></div>
+	<div id="overlay"></div>
+	
+	<div id="fb-root"></div>
+	
+	<script type="text/javascript" src="assets/js/ext/bjd.js"></script>
+	<script type="text/javascript" src="assets/js/libs/bj.chatbox.js"></script>
+	<script type="text/javascript" src="assets/js/libs/bj.emoticon.js"></script>
+	<script type="text/javascript" src="assets/js/libs/raphael.min.js"></script>
+	<script type="text/javascript" src="assets/js/libs/snowstorm.js"></script>
+	
+	<script type="text/javascript">
+	
+		var _CONTACT = false;
+		
+		var store = bj.storage.select(2);
+		var me = store.getItem('Me');
+		var cs = store.getItem('Connectors');
+		
+		if(!!me && !!cs){
+			_CONTACT = {
+				me : JSON.parse(me),
+				connectors : JSON.parse(cs)
+			}
+		}
+		if(!_CONTACT){
+			window.fbAsyncInit = function(){
+				FB.init({
+				  appId      : '1403953049836502', // App ID
+				  channelUrl : '//bjlab.us/mzm/channel.html', // Channel File
+				  status     : true, // check login status
+				  cookie     : true, // enable cookies to allow the server to access the session
+				  xfbml      : true  // parse XFBML
+				});
+
+				FB.Event.subscribe('auth.authResponseChange', function(response){
+					if (response.status === 'connected'){
+						app.fbchat.onconnect();
+					} else if (response.status === 'not_authorized') {
+						 FB.login();
+					} else {
+						FB.login();
+					}
+				});
+			};
+
+		  // Load the SDK asynchronously
+		  (function(d){
+		   var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+		   if (d.getElementById(id)) {return;}
+		   js = d.createElement('script'); js.id = id; js.async = true;
+		   js.src = "//connect.facebook.net/en_US/all.js";
+		   ref.parentNode.insertBefore(js, ref);
+		  }(document));
+		}
+	</script>	
+	
+	<script type="text/javascript" src="assets/js/templates/app.fbchat.tpl.js"></script>
+	<script type="text/javascript" src="assets/js/models/app.fbchat.model.js"></script>
+	<script type="text/javascript" src="assets/js/views/app.fbchat.view.js"></script>
+	
+	<script type="text/javascript" src="assets/js/app.fb.init.js"></script>
+  </body>
+</html>
